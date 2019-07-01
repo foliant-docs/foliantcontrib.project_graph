@@ -98,7 +98,7 @@ You can also change the look of the edges, which connect nodes. To do this you c
 
 ## Relations detailed syntax
 
-As stated in the beginning, to specify relations you need to add a `relates` param and include a list of related documents IDs\file paths:
+As stated in the beginning, to specify relations you need to add a `relates` param and include a list of related documents IDs\\file paths:
 
 ```yaml
 ---
