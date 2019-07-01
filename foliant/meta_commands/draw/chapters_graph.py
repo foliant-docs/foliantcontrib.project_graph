@@ -8,8 +8,8 @@ SECTIONS_KEY = 'sections'
 TITLE_KEY = 'title'
 REL_KEY = 'relates'
 REL_TYPE_KEY = 'type'
-REL_ID_KEY = 'rel_id'
-REL_PATH_KEY = 'rel_path'
+REL_ID_KEY = 'id'
+REL_PATH_KEY = 'path'
 GV_KEY = 'gv_attributes'
 
 
@@ -156,9 +156,9 @@ class ChaptersGraph:
         Detailed syntax:
 
         relates:
-            - rel_id: doc_id
-              rel_type: link
-            - rel_path: ../index.md
+            - id: doc_id
+              type: link
+            - name: ../index.md
 
         Or short syntax:
 
@@ -188,7 +188,7 @@ class ChaptersGraph:
         for section in self._sections:
             for rel_item in section.get_relations():
                 parent = None
-                if isinstance(rel_item, str):  # short syntax
+                if isinstance(rel_item, (str, PosixPath)):  # short syntax
                     rel_dict = {}
                     if rel_item in self._sections_with_id:
                         parent = self._sections_with_id[rel_item]
@@ -241,7 +241,6 @@ class ChaptersGraph:
                 rel_attrs = rel.gv
             g.add_edge(rel.parent.full_name,
                        rel.child.full_name,
-                       label=rel.type,
                        **rel_attrs)
         g.layout(prog='dot')
         output = self.config.get('filename', 'project_graph.png')
